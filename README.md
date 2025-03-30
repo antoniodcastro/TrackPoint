@@ -15,9 +15,7 @@ TrackPoint é uma aplicação desktop construída com Flet e Python que fornece 
 ## Pré-requisitos
 
 - Python 3.8+
-- Flet
-- PyAutoGUI
-- screeninfo
+- pip 
 
 ## Instalação
 
@@ -36,23 +34,6 @@ source venv/bin/activate  # No Windows use `venv\Scripts\activate`
 3. Instale as dependências:
 ```bash
 pip install flet pyautogui screeninfo
-```
-
-## Estrutura do Projeto
-
-```
-TrackPoint/
-│
-├── main.py          # Ponto de entrada principal da aplicação
-├── util/
-│   ├── actions.py   # Classes de ações principais
-│   ├── inputs.py    # Diálogos e gerenciadores de entrada
-│   ├── log.py       # Utilitários de log
-│   └── utility.py   # Constantes e auxiliares
-│
-└── assets/
-    ├── fonts/
-    └── images/
 ```
 
 ## Componentes Principais
