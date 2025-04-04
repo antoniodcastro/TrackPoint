@@ -1,2 +1,2 @@
 from core.log_manager import LogManager
-import core.logs as log
+import core.log as log

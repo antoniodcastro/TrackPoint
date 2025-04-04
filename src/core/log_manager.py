@@ -1,4 +1,5 @@
 import os 
+from core import log
 
 class LogManager:
     def __init__(self, log):
@@ -6,7 +7,7 @@ class LogManager:
         :para log: Instância do logger usada para registrar eventos.
         """
         self.log = log
-        self.log_tempo = log.log_tempo  # Caminho do arquivo de log de tempo
+        self.app_state = log.app_state  # Caminho do arquivo de log de tempo
 
     def abrir_pasta_log(self):
         """
@@ -15,7 +16,7 @@ class LogManager:
         self.log.add_log('INFO', 'Foi clicado para abrir a pasta onde o Log está')
         try:
             # Obtém o caminho absoluto da pasta onde o arquivo de log está
-            pasta = os.path.dirname(os.path.abspath(self.log_tempo))
+            pasta = os.path.dirname(os.path.abspath(self.app_state))
             os.startfile(pasta)  # Abre a pasta no explorador de arquivos
         except Exception as e:
             self.log.add_log('ERROR', f"Erro ao abrir a pasta do log: {e}")
@@ -29,7 +30,7 @@ class LogManager:
         self.log.add_log('INFO', 'Foi clicado para alterar o tempo')
         try:
             # Abre o arquivo de log em modo leitura e escrita
-            with open(self.log_tempo, 'r+', encoding='utf-8') as arquivo:
+            with open(self.app_state, 'r+', encoding='utf-8') as arquivo:
                 linhas = arquivo.readlines()  # Lê todas as linhas do arquivo
 
                 if linhas and linhas[0].startswith("Tempo:"):
@@ -55,7 +56,7 @@ class LogManager:
         self.log.add_log('INFO', 'Foi clicado para adicionar uma anotação no log')
         try:
             # Abre o arquivo de log no modo de anexo
-            with open(self.log_tempo, 'a', encoding='utf-8') as arquivo:
+            with open(self.app_state, 'a', encoding='utf-8') as arquivo:
                 # Escreve a anotação no final do arquivo com quebra de linha
                 arquivo.write(f"INFO: {anotacao}\n")
                 self.log.add_log('INFO', f"Anotação adicionada: {anotacao}")
