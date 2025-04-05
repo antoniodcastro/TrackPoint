@@ -1,1 +1,2 @@
-from dialogs.time import TimeDialog
+from .time import TimeDialog
+from .name import NameDialog
