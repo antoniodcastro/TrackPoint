@@ -9,7 +9,7 @@ class ScrollManager:
         """
         Args:
             window_controller (WindowController): Controlador de janela
-        """
+        """ 
         self.window_controller = window_controller
         self._valor_scroll = 0
         self._historico_scrolls = []
