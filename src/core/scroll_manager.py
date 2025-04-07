@@ -1,4 +1,4 @@
-from core import log
+from core import log,LogManager
 import pyautogui as py
 from time import sleep
 

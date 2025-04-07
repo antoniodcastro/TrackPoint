@@ -1,7 +1,7 @@
 import flet as ft
 
 class NameDialog:
-    def __init__(self, page, mouse_manager, ass):
+    def __init__(self, page, mouse_manager, sty):
         """
         :para page: Instância da página do Flet.
         :para mouse_manager: Gerenciador de mouse, responsável por capturar a posição.
@@ -9,10 +9,10 @@ class NameDialog:
         """
         self.page = page
         self.mouse_manager = mouse_manager
-        self.ass = ass
+        self.sty = sty
 
         # Campo de texto para capturar o nome
-        self.nome = ft.TextField(label="", border_color=self.ass.color_branco)
+        self.nome = ft.TextField(label="", border_color=self.sty.color_branco)
 
         # Definição do diálogo
         self.dialog_name = ft.AlertDialog(
@@ -25,14 +25,14 @@ class NameDialog:
                         ft.ElevatedButton(
                             "Salvar",
                             on_click=self.salvar_novo_nome,
-                            bgcolor=self.ass.color_branco,
-                            color=self.ass.color_preto_d1
+                            bgcolor=self.sty.color_branco,
+                            color=self.sty.color_preto_d1
                         ),
                         ft.ElevatedButton(
                             "Cancelar",
                             on_click=self.fechar_novo_nome,
-                            bgcolor=self.ass.color_branco,
-                            color=self.ass.color_preto_d1
+                            bgcolor=self.sty.color_branco,
+                            color=self.sty.color_preto_d1
                         ),
                     ],
                     alignment=ft.MainAxisAlignment.END,

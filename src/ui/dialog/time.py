@@ -1,20 +1,20 @@
 import flet as ft
 
 class TimeDialog:
-    def __init__(self, page, log, log_manager, ass):
+    def __init__(self, page, log, log_manager, sty):
         """
         :para page: Instância da página do Flet.
         :para log: Instância do logger.
         :para mod: Módulo para alterar o tempo.
-        :para ass: Variáveis auxiliares.
+        :para sty: Variáveis de estilo.
         """
         self.page = page
         self.log = log
         self.log_manager = log_manager
-        self.ass = ass
+        self.sty = sty
 
         # Campo de texto para o novo tempo
-        self.novo_tempo = ft.TextField(label="", border_color=self.ass.color_branco)
+        self.novo_tempo = ft.TextField(label="", border_color=self.sty.color_branco)
 
         # Dialog
         self.dialog_nova_tempo = ft.AlertDialog(
@@ -27,14 +27,14 @@ class TimeDialog:
                         ft.ElevatedButton(
                             "Salvar",
                             on_click=self.salvar_novo_tempo,
-                            bgcolor=self.ass.color_branco,
-                            color=self.ass.color_preto_d1
+                            bgcolor=self.sty.color_branco,
+                            color=self.sty.color_preto_d1
                         ),
                         ft.ElevatedButton(
                             "Cancelar",
                             on_click=self.fechar_novo_tempo,
-                            bgcolor=self.ass.color_branco,
-                            color=self.ass.color_preto_d1
+                            bgcolor=self.sty.color_branco,
+                            color=self.sty.color_preto_d1
                         ),
                     ],
                     alignment=ft.MainAxisAlignment.END,

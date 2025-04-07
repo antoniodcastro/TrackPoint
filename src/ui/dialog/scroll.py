@@ -2,18 +2,18 @@ import flet as ft
 import os
 
 class ScrollTestManager:
-    def __init__(self, page, scroll_manager, ass):
+    def __init__(self, page, scroll_manager, sty):
         """
         :para page: Instância da página do Flet.
         :para scroll_manager: Instância do ScrollManager para gerenciar o scroll.
-        :para ass: Variáveis auxiliares.
+        :para ass: Variáveis de estilo.
         """
         self.page = page
         self.scroll_manager = scroll_manager
-        self.ass = ass
+        self.sty = sty
 
         # Campo de texto para o valor do scroll
-        self.scroll_tempo = ft.TextField(label="", border_color=self.ass.color_branco)
+        self.scroll_tempo = ft.TextField(label="", border_color=self.sty.color_branco)
 
         # Dialog para capturar o valor do scroll
         self.dialog_scroll = ft.AlertDialog(
@@ -26,14 +26,14 @@ class ScrollTestManager:
                         ft.ElevatedButton(
                             "Testa",
                             on_click=self.salvar_scroll,
-                            bgcolor=self.ass.color_branco,
-                            color=self.ass.color_preto_d1
+                            bgcolor=self.sty.color_branco,
+                            color=self.sty.color_preto_d1
                         ),
                         ft.ElevatedButton(
                             "Cancelar",
                             on_click=self.fechar_scroll,
-                            bgcolor=self.ass.color_branco,
-                            color=self.ass.color_preto_d1
+                            bgcolor=self.sty.color_branco,
+                            color=self.sty.color_preto_d1
                         ),
                     ],
                     alignment=ft.MainAxisAlignment.END,
@@ -55,14 +55,14 @@ class ScrollTestManager:
                         ft.ElevatedButton(
                             "Salvar",
                             on_click=self.salva_scroll_alert,
-                            bgcolor=self.ass.color_branco,
-                            color=self.ass.color_preto_d1
+                            bgcolor=self.sty.color_branco,
+                            color=self.sty.color_preto_d1
                         ),
                         ft.ElevatedButton(
                             "Testa outro",
                             on_click=self.fechar_scroll_true,
-                            bgcolor=self.ass.color_branco,
-                            color=self.ass.color_preto_d1
+                            bgcolor=self.sty.color_branco,
+                            color=self.sty.color_preto_d1
                         ),
                     ],
                     alignment=ft.MainAxisAlignment.END,
