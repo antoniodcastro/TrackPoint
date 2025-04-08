@@ -17,6 +17,52 @@ TrackPoint é uma aplicação desktop construída com Flet e Python que fornece 
 - Python 3.8+
 - pip 
 
+## Estrutura do Projeto
+
+```plaintext
+TrackPoint/
+│
+├── readme.md                           # 📘 Documentação principal do projeto: instalação e uso.
+├── requirements.txt                    # 📦 Lista de dependências necessárias para o ambiente.
+│
+└── src/                                # 💻 Código-fonte da aplicação
+    ├── __init__.py
+    ├── main.py                         # 🧠 Arquivo principal da aplicação (ponto de entrada)
+    ├── app_state.txt                   # 🗃️ Controla o tempo e armazena informações globais.
+    │
+    ├── assets/                         # 🖼️ Recursos estáticos (imagens, fontes, logs)
+    │   ├── fonts/
+    │   │   └── YaroOp-Bold.ttf         # Fonte personalizada usada na interface
+    │   ├── img/
+    │   │   ├── ico.ico
+    │   │   ├── ico.png
+    │   │   └── trackpoint.png          
+    │   └── logs/                       # Arquivos de log gerados pela aplicação
+    │
+    ├── config/                         # ⚙️ Configurações globais do projeto
+    │   ├── __init__.py
+    │   └── paths.py                    # Caminhos de arquivos e diretórios
+    │
+    ├── core/                           # 🧩 Lógica central e funcionalidades principais
+    │   ├── __init__.py
+    │   ├── log_manager.py              # Gerencia logs: salvar, abrir, anotar, etc.
+    │   ├── logs.py                     # Manipulação direta de arquivos de log
+    │   ├── monito_resol.py             # Verificação da resolução dos monitores
+    │   ├── mouse_manager.py            # Controle de posição e clique do mouse
+    │   ├── scroll_manager.py           # Lógica de leitura/execução de scroll
+    │   └── windows_controller.py       # Controle da janela (minimizar, maximizar)
+    │
+    ├── ui/                             # 🎨 Interface gráfica do usuário (UI)
+    │   ├── __init__.py
+    │   ├── components.py               # Componentes reutilizáveis (botões, containers customizados)
+    │   ├── styles.py                   # Cores, fontes e estilos visuais padrão
+    │   └── dialog/                     # 🗨️ Janelas de diálogo (modais)
+    │       ├── name.py                 # Captura o nome da posição do mouse
+    │       ├── save_annotation.py      # Adiciona anotações manuais ao log
+    │       ├── scroll.py               # Teste de scroll e configuração
+    │       └── time.py                 # Configuração do tempo de execução
+
+
 ## Instalação
 
 1. Clone o repositório:
@@ -66,6 +112,7 @@ python main.py
 ```
 
 ### Recursos da Interface Principal
+
 - Abrir Pasta de Logs
 - Alterar Tempo de Espera
 - Adicionar Anotações
@@ -75,8 +122,19 @@ python main.py
 
 ## Personalização
 
-- Modifique `util/utility.py` para cores e caminhos da UI
-- Ajuste o comportamento de log em `util/log.py`
+Você pode adaptar o comportamento e o estilo da aplicação conforme sua necessidade:
+
+- 🎨 **Estilos Visuais**  
+  Modifique cores, fontes e aparência em `ui/styles.py`.
+
+- 🧩 **Componentes da UI**  
+  Altere ou crie novos elementos reutilizáveis em `ui/components.py`.
+
+- ⚙️ **Caminhos de Arquivos**  
+  Defina ou ajuste diretórios padrão no arquivo `config/paths.py`.
+
+- 📜 **Lógica de Logs**  
+  Customize como logs são criados, anotados ou salvos em `core/log_manager.py` e `core/logs.py`.
 
 ## Contribuição
 
@@ -85,3 +143,8 @@ python main.py
 3. Commit suas alterações (`git commit -m 'Adiciona algum Recurso'`)
 4. Envie para a branch (`git push origin feature/RecursoIncrivel`)
 5. Abra um Pull Request
+
+## Autor
+
+Desenvolvido por [Antônio Lucas](https://github.com/antoniodcastro) 💻  
+Entre em contato: antoniolucas323@gmail.com
