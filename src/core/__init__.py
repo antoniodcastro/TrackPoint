@@ -3,4 +3,4 @@ from .windows_controller import WindowController
 from .scroll_manager import ScrollManager
 from .mouse_manager import MousePositionManager
 from .monito_resol import MonitorResolucao
-import core.log as log
+from .log import criar_log,escrever_log,add_log,log_file,add_log_app,criar_app_state,ler_numero_primeira_linha

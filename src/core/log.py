@@ -20,14 +20,14 @@ def add_log(status, mensagem):
     escrever_log(mensagem)
 
 # ======================================== Adcição de logs do app
-def log(mensagem):
+def log_file(mensagem):
     app_state = 'app_state.txt'
     with open(app_state, 'a', encoding='utf-8') as arquivo:  # Abre o arquivo em modo de adição
         arquivo.write(f"{mensagem}\n")  # Escreve a mensagem seguida por uma nova linha
 
 def add_log_app(status, mensagem):
     mensagem = f"{status}: {mensagem}"
-    log(mensagem)
+    log_file(mensagem)
 
 # ======================================== Criar Log + tempo padrão
 def criar_app_state(app_state):
