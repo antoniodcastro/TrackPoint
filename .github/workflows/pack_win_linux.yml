@@ -83,20 +83,28 @@ jobs:
     name: Build for Linux (via Docker)
     runs-on: ubuntu-latest
 
+    container:
+      image: python:3.10-buster
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build app inside Docker container (Ubuntu 20.04)
+      - name: Install flet-cli ${{ env.FLET_CLI_VERSION }}
         run: |
-          docker run --rm -v ${{ github.workspace }}:/app -w /app python:3.10-bullseye bash -c "
-            apt update &&
-            apt install -y python3-pip libgl1 libx11-6 && 
-            pip install flet pyautogui pyinstaller screeninfo &&
-            flet pack src/main.py --icon src/assets/img/ico.ico --add-data "src/assets:assets" --name TrackPoint
-          "
+          pip install --upgrade pip
+          pip install flet-cli==${{ env.FLET_CLI_VERSION }}
 
-      - name: Upload Linux Artifact
+      - name: Install Python dependencies
+        run: |
+          pip install flet pyautogui PyInstaller screeninfo
+
+      - name: Pack app for Linux
+        run: |
+          cd ${{ github.workspace }}
+          flet pack src/main.py --icon src/assets/img/ico.ico --add-data "src/assets:assets" --name TrackPoint
+
+      - name: Upload Linux
         uses: actions/upload-artifact@v4.3.4
         with:
           name: build_linux
