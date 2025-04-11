@@ -68,7 +68,7 @@ jobs:
     - name: Pack app for Windows
       run: |
         cd ${{ github.workspace }}
-        flet pack main.py --icon src/assets/img/ico.ico --add-data "src/assets;assets" --name TrackPoint
+        flet pack src/main.py --icon src/assets/img/ico.ico --add-data "src/assets;assets" --name TrackPoint
 
     # Faz upload da build como artefato (para baixar pela interface do GitHub)
     - name: Upload Windows Artifact
@@ -104,7 +104,7 @@ jobs:
     - name: Pack app for Linux
       run: |
         cd ${{ github.workspace }}
-        flet pack main.py --icon src/assets/img/ico.ico --add-data "src/assets:assets" --name TrackPoint
+        flet pack src/main.py --icon src/assets/img/ico.ico --add-data "src/assets:assets" --name TrackPoint
 
     - name: Upload Linux Artifact
       uses: actions/upload-artifact@v4.3.4
