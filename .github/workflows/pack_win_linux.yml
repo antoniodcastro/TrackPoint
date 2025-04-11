@@ -75,7 +75,7 @@ jobs:
       uses: actions/upload-artifact@v4.3.4
       with:
         name: windows-build-artifact
-        path: dist/TrackPoint
+        path: dist/TrackPoint.exe
         if-no-files-found: error
         overwrite: false
 
