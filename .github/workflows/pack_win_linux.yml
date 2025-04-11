@@ -74,14 +74,14 @@ jobs:
     - name: Upload Windows Artifact
       uses: actions/upload-artifact@v4.3.4
       with:
-        name: windows-build-artifact
+        name: build_windows
         path: dist/TrackPoint.exe
         if-no-files-found: error
         overwrite: false
 
   build-linux:
     name: Build for Linux
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
     - name: Checkout code
@@ -106,10 +106,10 @@ jobs:
         cd ${{ github.workspace }}
         flet pack src/main.py --icon src/assets/img/ico.ico --add-data "src/assets:assets" --name TrackPoint
 
-    - name: Upload Linux Artifact
+    - name: Upload Linux
       uses: actions/upload-artifact@v4.3.4
       with:
-        name: linux-build-artifact
+        name: build_linux
         path: dist/TrackPoint
         if-no-files-found: error
         overwrite: false
