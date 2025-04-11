@@ -80,32 +80,29 @@ jobs:
         overwrite: false
 
   build-linux:
-    name: Build for Linux (via Docker)
+    name: Build for Linux (via Dockerfile)
     runs-on: ubuntu-latest
-
-    container:
-      image: python:3.10-buster
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install flet-cli ${{ env.FLET_CLI_VERSION }}
+      # Constrói a imagem Docker com base no Dockerfile customizado
+      - name: Build custom Docker image
         run: |
-          pip install --upgrade pip
-          pip install flet-cli==${{ env.FLET_CLI_VERSION }}
+          docker build -t trackpoint-builder -f .github/doc/dockerfile .
 
-      - name: Install Python dependencies
+      # Executa o build do app usando o container criado
+      - name: Run build in Docker container
         run: |
-          pip install flet pyautogui PyInstaller screeninfo
+          docker run --rm -v ${{ github.workspace }}:/app trackpoint-builder \
+            bash -c "cd /app && flet pack src/main.py --icon src/assets/img/ico.ico --add-data 'src/assets:assets' --name TrackPoint"
 
-      - name: Pack app for Linux
-        run:  flet pack src/main.py --icon src/assets/img/ico.ico --add-data "src/assets:assets" --name TrackPoint
-
-      - name: Upload Linux
+      - name: Upload Linux Artifact
         uses: actions/upload-artifact@v4.3.4
         with:
           name: build_linux
           path: dist/TrackPoint
           if-no-files-found: error
           overwrite: false
+    
