@@ -100,9 +100,7 @@ jobs:
           pip install flet pyautogui PyInstaller screeninfo
 
       - name: Pack app for Linux
-        run: |
-          cd ${{ github.workspace }}
-          flet pack src/main.py --icon src/assets/img/ico.ico --add-data "src/assets:assets" --name TrackPoint
+        run:  flet pack src/main.py --icon src/assets/img/ico.ico --add-data "src/assets:assets" --name TrackPoint
 
       - name: Upload Linux
         uses: actions/upload-artifact@v4.3.4
