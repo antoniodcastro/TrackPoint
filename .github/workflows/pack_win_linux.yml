@@ -65,10 +65,10 @@ jobs:
         pip install flet pyautogui PyInstaller screeninfo
 
     # Executa o processo de build para Windows com Flet
-    - name: TrackPoint
+    - name: Pack app for Windows
       run: |
         cd ${{ github.workspace }}
-        flet pack main.py --icon assets/img/ico.ico --add-data "assets;assets" --name TrackPoint
+        flet pack main.py --icon src/assets/img/ico.ico --add-data "src/assets;assets" --name TrackPoint
 
     # Faz upload da build como artefato (para baixar pela interface do GitHub)
     - name: Upload Windows Artifact
@@ -95,7 +95,7 @@ jobs:
     - name: Install flet-cli ${{ env.FLET_CLI_VERSION }}
       run: |
         python -m pip install --upgrade pip
-        pip install flet-cli==$env:FLET_CLI_VERSION
+        pip install flet-cli==${{ env.FLET_CLI_VERSION }}
 
     - name: Install Python dependencies
       run: |
@@ -104,7 +104,7 @@ jobs:
     - name: Pack app for Linux
       run: |
         cd ${{ github.workspace }}
-        flet pack main.py --icon assets/img/ico.ico --add-data "assets:assets" --name TrackPoint
+        flet pack main.py --icon src/assets/img/ico.ico --add-data "src/assets:assets" --name TrackPoint
 
     - name: Upload Linux Artifact
       uses: actions/upload-artifact@v4.3.4
