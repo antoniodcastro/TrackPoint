@@ -1,0 +1,115 @@
+name: TrackPoint
+
+on:
+  # Executa ao fazer push para qualquer uma das branches abaixo
+  push:
+    branches:
+      - main
+
+  # Executa em eventos de pull request que tenham como destino uma das branches abaixo
+  pull_request:
+    branches:
+      - main
+
+  # Permite executar esse workflow manualmente pela aba "Actions" do repositório
+  workflow_dispatch:
+
+env:
+  # https://flet.dev/docs/publish#versioning
+  # Número de build (geralmente incrementado automaticamente)
+  BUILD_NUMBER: 1
+
+  # Versão da aplicação (exibida na build final)
+  BUILD_VERSION: 1.0.0
+
+  # Versão do Python a ser usada
+  PYTHON_VERSION: 3.12.8
+
+  # Versão do flet-cli a ser instalada para usar o comando `flet build`
+  FLET_CLI_VERSION: 0.27.5
+
+  # Garante que o Python use codificação UTF-8 por padrão
+  PYTHONUTF8: 1
+
+  # Desativa saída com formatação rica no terminal do Flet CLI
+  FLET_CLI_NO_RICH_OUTPUT: 1
+
+  # Desativa barras de progresso ao usar o gerenciador UV
+  UV_NO_PROGRESS: 1
+
+jobs:
+  build-windows:
+    # Executa em uma máquina virtual com Windows
+    runs-on: windows-latest
+
+    steps:
+    # Faz o checkout (baixa o código) do repositório
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Configura o Python com a versão definida nas variáveis de ambiente
+    - name: Setup Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    # Instala o flet-cli na versão desejada
+    - name: Install flet-cli ${{ env.FLET_CLI_VERSION }}
+      run: |
+        python -m pip install --upgrade pip
+        pip install flet-cli==$env:FLET_CLI_VERSION
+
+    #  Instalar todas as dependecias do projeto    
+    - name: Install Python dependencies
+      run: |
+        pip install flet pyautogui PyInstaller screeninfo
+
+    # Executa o processo de build para Windows com Flet
+    - name: TrackPoint
+      run: |
+        cd ${{ github.workspace }}
+        flet pack main.py --icon assets/img/ico.ico --add-data "assets;assets" --name TrackPoint
+
+    # Faz upload da build como artefato (para baixar pela interface do GitHub)
+    - name: Upload Windows Artifact
+      uses: actions/upload-artifact@v4.3.4
+      with:
+        name: windows-build-artifact
+        path: dist/TrackPoint
+        if-no-files-found: error
+        overwrite: false
+
+  build-linux:
+    name: Build for Linux
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Python ${{ env.PYTHON_VERSION }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install flet-cli ${{ env.FLET_CLI_VERSION }}
+      run: |
+        python -m pip install --upgrade pip
+        pip install flet-cli==$env:FLET_CLI_VERSION
+
+    - name: Install Python dependencies
+      run: |
+        pip install flet pyautogui PyInstaller screeninfo
+
+    - name: Pack app for Linux
+      run: |
+        cd ${{ github.workspace }}
+        flet pack main.py --icon assets/img/ico.ico --add-data "assets:assets" --name TrackPoint
+
+    - name: Upload Linux Artifact
+      uses: actions/upload-artifact@v4.3.4
+      with:
+        name: linux-build-artifact
+        path: dist/TrackPoint
+        if-no-files-found: error
+        overwrite: false
