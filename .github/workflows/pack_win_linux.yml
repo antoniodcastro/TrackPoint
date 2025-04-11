@@ -80,36 +80,35 @@ jobs:
         overwrite: false
 
   build-linux:
-    name: Build for Linux
-    runs-on: ubuntu-20.04
+    name: Build for Linux (via Docker)
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Setup Python ${{ env.PYTHON_VERSION }}
-      uses: actions/setup-python@v5
-      with:
-        python-version: ${{ env.PYTHON_VERSION }}
+      - name: Build app using Docker (Ubuntu 20.04)
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/app \
+            -w /app \
+            ubuntu:20.04 /bin/bash -c "
+              apt update &&
+              apt install -y python3 python3-pip python3-venv curl git \
+                            libgl1 libnss3 libxss1 libasound2 \
+                            libx11-xcb1 libxcomposite1 libxcursor1 \
+                            libxi6 libxtst6 libxrandr2 &&
+              python3 -m venv venv &&
+              . venv/bin/activate &&
+              pip install --upgrade pip &&
+              pip install flet==${{ env.FLET_CLI_VERSION }} flet-cli==${{ env.FLET_CLI_VERSION }} pyautogui PyInstaller screeninfo &&
+              flet pack src/main.py --icon src/assets/img/ico.ico --add-data 'src/assets:assets' --name TrackPoint
+            "
 
-    - name: Install flet-cli ${{ env.FLET_CLI_VERSION }}
-      run: |
-        python -m pip install --upgrade pip
-        pip install flet-cli==${{ env.FLET_CLI_VERSION }}
-
-    - name: Install Python dependencies
-      run: |
-        pip install flet pyautogui PyInstaller screeninfo
-
-    - name: Pack app for Linux
-      run: |
-        cd ${{ github.workspace }}
-        flet pack src/main.py --icon src/assets/img/ico.ico --add-data "src/assets:assets" --name TrackPoint
-
-    - name: Upload Linux
-      uses: actions/upload-artifact@v4.3.4
-      with:
-        name: build_linux
-        path: dist/TrackPoint
-        if-no-files-found: error
-        overwrite: false
+      - name: Upload Linux Artifact
+        uses: actions/upload-artifact@v4.3.4
+        with:
+          name: build_linux
+          path: dist/TrackPoint
+          if-no-files-found: error
+          overwrite: false
