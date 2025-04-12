@@ -1,4 +1,4 @@
-name: Build_Win_Linux
+name: Build_Win
 
 on:
   # Executa ao fazer push para qualquer uma das branches abaixo
