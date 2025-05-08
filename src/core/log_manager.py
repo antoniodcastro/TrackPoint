@@ -1,5 +1,7 @@
 import os 
+import subprocess
 from core import log
+
 
 class LogManager:
     def __init__(self, log):
@@ -15,9 +17,19 @@ class LogManager:
         """
         self.log.add_log('INFO', 'Foi clicado para abrir a pasta onde o Log está')
         try:
+            from core.detect_platform import system
             # Obtém o caminho absoluto da pasta onde o arquivo de log está
             pasta = os.path.dirname(os.path.abspath(self.app_state))
-            os.startfile(pasta)  # Abre a pasta no explorador de arquivos
+
+            if system == "win":
+                os.startfile(pasta)  # Abre a pasta no explorador de arquivos no Windows
+            elif system == "Linux":
+                subprocess.run(['xdg-open', pasta], check=True)  # Abre a pasta no gerenciador de arquivos padrão no Linux
+            else:
+                self.log.add_log('ERROR', f"Sistema operacional não suportado: {system}")
+                # Aqui, você pode adicionar um tratamento de erro mais adequado para outros sistemas operacionais, se necessário.
+                # Por exemplo, exibir uma mensagem para o usuário informando que o sistema operacional não é suportado.
+
         except Exception as e:
             self.log.add_log('ERROR', f"Erro ao abrir a pasta do log: {e}")
 
