@@ -1,5 +1,5 @@
 import flet as ft
-from core import LogManager,log,WindowController, ScrollManager,MousePositionManager,MonitorResolucao
+from core import LogManager,log,WindowController, ScrollManager,MousePositionManager,MonitorResolucao,detect
 from ui import TimeDialog,NameDialog,ScrollTestManager,SalvaAnotacao,sty,comp
 from config import cam
 
@@ -20,17 +20,13 @@ def main(page: ft.Page) -> None:
     name_dialog = NameDialog(page, mouse_manager, sty)
     anotacao = SalvaAnotacao(page, log, log_manager, sty)
     
+    detect(page)
+    
     page.title = "TrackPoint"
     page.theme_mode = ft.ThemeMode.DARK
     page.bgcolor = sty.color_fundo
     page.window.width = 700        
     page.window.height = 500        
-    page.window.min_width = 700    # Deixa essa opção apenas no linux 
-    page.window.min_height = 500   # Deixa essa opção apenas no linux 
-    page.window.max_width = 800    # Deixa essa opção apenas no linux 
-    page.window.max_height = 500   # Deixa essa opção apenas no linux 
-    #page.window.resizable = False # Quando tive no linux apagar essa linha pra não da erra na visualização
-    page.window.maximizable = True # Desativa essa opção quando tive no linux
     page.window.icon = cam.caminho_img
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
