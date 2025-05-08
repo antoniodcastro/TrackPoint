@@ -23,24 +23,41 @@ def main(page: ft.Page) -> None:
     page.title = "TrackPoint"
     page.theme_mode = ft.ThemeMode.DARK
     page.bgcolor = sty.color_fundo
-    page.window.width = 1000
-    page.window.height = 700
-    page.window.resizable = False
-    page.window.maximizable = False # Desativa essa opção quando tive no linux
+    page.window.width = 700        
+    page.window.height = 500        
+    page.window.min_width = 700    # Deixa essa opção apenas no linux 
+    page.window.min_height = 500   # Deixa essa opção apenas no linux 
+    page.window.max_width = 800    # Deixa essa opção apenas no linux 
+    page.window.max_height = 500   # Deixa essa opção apenas no linux 
+    #page.window.resizable = False # Quando tive no linux apagar essa linha pra não da erra na visualização
+    page.window.maximizable = True # Desativa essa opção quando tive no linux
     page.window.icon = cam.caminho_img
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.CrossAxisAlignment.CENTER
+    page.padding = 0
 
     page.fonts = {
         "YaroOp-Bold": "assets/fonts/YaroOp-Bold.ttf",
     }
     page.theme = ft.Theme(font_family="YaroOp-Bold")
 
-    img_trackpoint = ft.Image(src=cam.caminho_img, width=350, height=200)
+    img_trackpoint = ft.Image(
+        src=cam.caminho_img, 
 
+    )
+
+    fundo = ft.Container(
+        image=ft.DecorationImage(
+            src=cam.caminho_fundo,
+            fit=ft.ImageFit.COVER,
+            alignment=ft.alignment.center,
+            ),
+        expand=True,
+    )
 # ======================================== Coluna
     coluna = ft.Column(
         controls=[
+            ft.Container(),
             img_trackpoint,
             ft.Row(
                 controls=[
@@ -51,16 +68,26 @@ def main(page: ft.Page) -> None:
             ),
             comp.Container(conteudo=comp.conteudo_posicao),
             comp.Container(conteudo=comp.conteudo_scroll),
-            comp.Container(conteudo=comp.conteudo_resolucao),
-            ft.Container(expand=True)      
+            comp.Container(conteudo=comp.conteudo_resolucao), 
         ],
         alignment=ft.MainAxisAlignment.CENTER,
         horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         spacing=20,
         expand=True,
+        
     )
     
-    page.add(coluna)
+    page.add(
+        ft.Container( 
+            expand=True,
+            content=ft.Stack(
+                controls=[
+                    fundo,
+                    coluna
+                ]
+            ),
+        )
+    )
     page.update()
 
     comp.abrir.on_click = lambda _: log_manager.abrir_pasta_log ()
